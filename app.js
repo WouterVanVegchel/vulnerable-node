@@ -8,6 +8,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var log4js = require("log4js");
+var _ = require('lodash');
 
 var init_db = require('./model/init_db');
 var login = require('./routes/login');
@@ -67,9 +68,10 @@ app.use(function(req, res, next) {
  */
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
+    var x = _.defaults({ 'a': 1 }, { 'a': 3, 'b': 2 });
     res.status(err.status || 500);
     res.render('error', {
-      message: err.message,
+      message: err.message + x,
       error: err
     });
   });
